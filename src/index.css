@@ -1,0 +1,222 @@
+ @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+ 
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+ 
+ @layer base {
+   :root {
+     /* Core palette - forest at dusk */
+      --background: 120 15% 6%;
+      --foreground: 0 0% 93%;
+
+      --card: 120 12% 8%;
+      --card-foreground: 0 0% 90%;
+
+      --popover: 120 12% 7%;
+      --popover-foreground: 0 0% 93%;
+
+      /* Primary - deep moss */
+      --primary: 120 20% 25%;
+      --primary-foreground: 0 0% 93%;
+
+      /* Secondary - earth */
+      --secondary: 30 15% 15%;
+      --secondary-foreground: 0 0% 88%;
+
+      /* Muted - shadow */
+      --muted: 120 8% 12%;
+      --muted-foreground: 0 0% 72%;
+
+      /* Accent - fading leaf */
+      --accent: 45 20% 20%;
+      --accent-foreground: 0 0% 88%;
+
+      /* Destructive - blood earth */
+      --destructive: 0 25% 25%;
+      --destructive-foreground: 0 0% 88%;
+ 
+     --border: 120 8% 15%;
+     --input: 120 8% 12%;
+     --ring: 120 15% 30%;
+ 
+     --radius: 0.25rem;
+ 
+     /* Custom tokens for the installation */
+     --forest-deep: 130 25% 12%;
+     --forest-canopy: 120 30% 20%;
+     --forest-moss: 100 20% 30%;
+     --forest-bark: 30 20% 18%;
+     --forest-shadow: 120 10% 5%;
+     --forest-mist: 180 5% 60%;
+     
+     /* Decay states */
+     --decay-fragment: 0 0% 8%;
+     --decay-shadow: 30 10% 10%;
+     --decay-blur: 120 5% 15%;
+     
+      /* Data visualization - Mata */
+      --data-deforestation: 15 40% 35%;
+      --data-consumption: 0 30% 30%;
+      --data-extraction: 40 25% 25%;
+      
+       /* Data visualization - Mar */
+       --data-ocean: 200 60% 45%;
+       --data-pollution: 180 30% 35%;
+       --data-fishing: 220 40% 40%;
+       --data-acidification: 170 35% 38%;
+       
+       /* Data visualization - Ar */
+       --data-air: 240 30% 55%;
+       --data-particulates: 0 0% 50%;
+       --data-methane: 30 35% 45%;
+       --data-ozone: 270 25% 50%;
+     
+     /* Typography */
+     --font-serif: 'Crimson Pro', Georgia, serif;
+     --font-sans: system-ui, -apple-system, sans-serif;
+     
+     /* Timing */
+     --duration-slow: 3000ms;
+     --duration-medium: 1500ms;
+     --duration-breath: 8000ms;
+     
+     /* Easing */
+     --ease-organic: cubic-bezier(0.4, 0, 0.2, 1);
+     --ease-decay: cubic-bezier(0.7, 0, 0.3, 1);
+   }
+ }
+ 
+ @layer base {
+   * {
+     @apply border-border;
+   }
+ 
+   html {
+     scroll-behavior: smooth;
+   }
+ 
+   body {
+     @apply bg-background text-foreground antialiased;
+     font-family: var(--font-sans);
+     overflow-x: hidden;
+   }
+ 
+   /* Organic selection */
+   ::selection {
+     background: hsl(var(--forest-moss) / 0.3);
+     color: hsl(var(--foreground));
+   }
+ }
+ 
+ @layer components {
+   /* Breathing animation for subtle life */
+   .animate-breathe {
+     animation: breathe var(--duration-breath) var(--ease-organic) infinite;
+   }
+ 
+   @keyframes breathe {
+     0%, 100% { opacity: 1; }
+     50% { opacity: 0.85; }
+   }
+ 
+   /* Slow fade for transitions */
+   .transition-organic {
+     transition: all var(--duration-medium) var(--ease-organic);
+   }
+ 
+   .transition-decay {
+     transition: all var(--duration-slow) var(--ease-decay);
+   }
+ 
+   /* Text styles */
+   .text-conceptual {
+     font-family: var(--font-serif);
+     font-weight: 300;
+     letter-spacing: 0.02em;
+     line-height: 1.6;
+   }
+ 
+   .text-data {
+     font-family: var(--font-sans);
+     font-variant-numeric: tabular-nums;
+     font-size: 0.75rem;
+     letter-spacing: 0.05em;
+     text-transform: uppercase;
+   }
+ 
+    .text-whisper {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+    }
+ 
+   /* Dashboard panel */
+   .panel-ethical {
+     background: linear-gradient(
+       180deg,
+       hsl(var(--card) / 0.95) 0%,
+       hsl(var(--forest-shadow) / 0.9) 100%
+     );
+     backdrop-filter: blur(20px);
+     border: 1px solid hsl(var(--border) / 0.5);
+   }
+ 
+   /* Slider for questions */
+   .slider-organic {
+     @apply appearance-none bg-transparent cursor-pointer;
+   }
+ 
+   .slider-organic::-webkit-slider-track {
+     @apply h-px rounded-full;
+     background: hsl(var(--border));
+   }
+ 
+   .slider-organic::-webkit-slider-thumb {
+     @apply appearance-none w-3 h-3 rounded-full -mt-1.5;
+     background: hsl(var(--forest-moss));
+     transition: transform var(--duration-medium) var(--ease-organic);
+   }
+ 
+   .slider-organic::-webkit-slider-thumb:hover {
+     transform: scale(1.2);
+   }
+ 
+   /* Mode toggle */
+   .mode-toggle {
+     @apply fixed z-50 opacity-0 hover:opacity-100 focus:opacity-100;
+     transition: opacity var(--duration-medium) var(--ease-organic);
+   }
+ 
+   /* Installation mode - hide all UI */
+   .installation-mode .ui-element {
+     opacity: 0 !important;
+     pointer-events: none;
+   }
+ 
+   /* Canvas container */
+   .canvas-container {
+     @apply fixed inset-0 z-0;
+   }
+ 
+   /* Grain overlay for organic texture */
+   .grain-overlay {
+     position: fixed;
+     inset: 0;
+     pointer-events: none;
+     opacity: 0.03;
+     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+   }
+ }
+ 
+ @layer utilities {
+   .fade-edges {
+     mask-image: linear-gradient(
+       to bottom,
+       transparent 0%,
+       black 5%,
+       black 95%,
+       transparent 100%
+     );
+   }
+ }
