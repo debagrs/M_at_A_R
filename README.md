@@ -13,9 +13,23 @@ M_at_A_R é uma série tríptica ambiental que investiga a interdependência ent
 - Lucide React
 - Supabase
 
+## Como Rodar no GitHub Codespace
+
+1. Clique em **"Code"** → **"Codespaces"** → **"Create codespace on main"**.
+2. Espere o Codespace ser criado (ele vai instalar dependências automaticamente).
+3. No terminal, execute:
+   ```bash
+   npm run dev
+   ```
+4. Clique no link que aparecerá ou acesse `http://localhost:8080` no navegador.
+
 ## Como Rodar Localmente
 
-1. Clone o repositório.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/debagrs/M_at_A_R.git
+   cd M_at_A_R
+   ```
 2. Instale as dependências:
    ```bash
    npm install
