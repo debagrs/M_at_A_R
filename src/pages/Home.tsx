@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { PageTransition } from '@/components/PageTransition';
 import { ProjectFooter } from '@/components/ProjectFooter';
+import { ImmersiveLayout } from '@/components/ImmersiveLayout';
 import { useHomeAudio } from '@/hooks/useHomeAudio';
 import mataVideo from '@/assets/mata.mp4';
 import marVideo from '@/assets/mar.mp4';
@@ -223,7 +224,7 @@ const ArtworkCard = ({ title, videoSrc, route, index, onShatter }: ArtworkCardPr
         delay: isFragmenting ? 0 : 0.8 + index * 0.2, 
         ease: [0.4, 0, 0.2, 1] 
       }}
-      className="relative flex flex-col items-center group cursor-pointer"
+      className="relative flex flex-col items-center group cursor-pointer max-w-sm mx-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
@@ -261,7 +262,7 @@ const ArtworkCard = ({ title, videoSrc, route, index, onShatter }: ArtworkCardPr
           transition={{ duration: 0.5, delay: 0.2 }}
           aria-hidden="true"
         >
-          <span className="text-conceptual text-xs md:text-sm tracking-[0.2em] uppercase text-white/90">
+          <span className="text-conceptual text-xs sm:text-sm tracking-[0.2em] uppercase text-white/90">
             entrar →
           </span>
         </motion.div>
@@ -278,8 +279,8 @@ const ArtworkCard = ({ title, videoSrc, route, index, onShatter }: ArtworkCardPr
         />
       </div>
 
-      <div className="w-full border border-t-0 border-foreground/30 rounded-b-sm bg-black/30 backdrop-blur-sm py-2 md:py-3 px-3 md:px-4 text-center">
-        <h2 className="text-base md:text-xl font-light tracking-[0.25em] uppercase text-white group-hover:text-white transition-colors duration-700">
+      <div className="w-full border border-t-0 border-foreground/30 rounded-b-sm bg-black/30 backdrop-blur-sm py-2 sm:py-3 px-2 sm:px-3 md:px-4 text-center">
+        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-light tracking-[0.2em] sm:tracking-[0.25em] uppercase text-white group-hover:text-white transition-colors duration-700">
           {title}
         </h2>
       </div>
@@ -293,6 +294,7 @@ const Home = () => {
     fragments: Fragment[];
     cardRect: DOMRect;
   } | null>(null);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   // Audio: ambient nature mixed with glitch
   useHomeAudio(true);
@@ -301,64 +303,70 @@ const Home = () => {
     setShatter({ videoSrc, fragments, cardRect });
   }, []);
 
+  const toggleSidebar = useCallback(() => {
+    setShowSidebar(!showSidebar);
+  }, [showSidebar]);
+
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 md:px-12 py-12 md:py-16 relative overflow-hidden" role="main" aria-label="Página inicial M_at_A_R">
-        {/* Logo */}
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: shatter ? 0 : 1, y: 0 }}
-          transition={{ duration: shatter ? 0.3 : 1.5, ease: [0.4, 0, 0.2, 1] }}
-          className="mb-8 md:mb-16 text-center"
-        >
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-[0.3em]">
-            <span className="text-white">M</span>
-            <span className="text-white/60">_</span>
-            <span className="text-white">at</span>
-            <span className="text-white/60">_</span>
-            <span className="text-white">A</span>
-            <span className="text-white/60">_</span>
-            <span className="text-white">R</span>
-          </h1>
+    <ImmersiveLayout showSidebar={showSidebar} onToggleSidebar={toggleSidebar}>
+      <PageTransition>
+        <div className="min-h-screen bg-black flex flex-col items-center justify-center px-2 sm:px-4 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16 relative overflow-hidden" role="main" aria-label="Página inicial M_at_A_R">
+          {/* Logo */}
+          <motion.header
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: shatter ? 0 : 1, y: 0 }}
+            transition={{ duration: shatter ? 0.3 : 1.5, ease: [0.4, 0, 0.2, 1] }}
+            className="mb-6 sm:mb-8 md:mb-12 lg:mb-16 text-center"
+          >
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light tracking-[0.2em] sm:tracking-[0.3em]">
+              <span className="text-white">M</span>
+              <span className="text-white/60">_</span>
+              <span className="text-white">at</span>
+              <span className="text-white/60">_</span>
+              <span className="text-white">A</span>
+              <span className="text-white/60">_</span>
+              <span className="text-white">R</span>
+            </h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 1.5 }}
+              className="mt-2 sm:mt-3 md:mt-4 text-[9px] sm:text-[10px] md:text-xs tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white/80"
+            >
+              Tríptico Ambiental
+            </motion.p>
+          </motion.header>
+
+          {/* Triptych grid - responsive */}
+          <section className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8" aria-label="Obras do tríptico">
+            <ArtworkCard title="Mata" videoSrc={mataVideo} route="/mata" index={0} onShatter={handleShatter} />
+            <ArtworkCard title="Mar" videoSrc={marVideo} route="/mar" index={1} onShatter={handleShatter} />
+            <ArtworkCard title="Ar" videoSrc={arVideo} route="/ar" index={2} onShatter={handleShatter} />
+          </section>
+
+          {/* Subtle bottom text */}
           <motion.p
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1.5 }}
-            className="mt-3 md:mt-4 text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/80"
+            animate={{ opacity: shatter ? 0 : 1 }}
+            transition={{ delay: shatter ? 0 : 2, duration: shatter ? 0.3 : 2 }}
+            className="mt-6 sm:mt-8 md:mt-12 lg:mt-16 text-conceptual text-[9px] sm:text-[10px] md:text-xs text-foreground/80 text-center tracking-wide px-2 sm:px-4 max-w-2xl"
           >
-            Tríptico Ambiental
+            Dados ambientais em tempo real modulam a degradação da imagem
           </motion.p>
-        </motion.header>
+        </div>
+        <ProjectFooter />
 
-        {/* Triptych grid */}
-        <section className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8" aria-label="Obras do tríptico">
-          <ArtworkCard title="Mata" videoSrc={mataVideo} route="/mata" index={0} onShatter={handleShatter} />
-          <ArtworkCard title="Mar" videoSrc={marVideo} route="/mar" index={1} onShatter={handleShatter} />
-          <ArtworkCard title="Ar" videoSrc={arVideo} route="/ar" index={2} onShatter={handleShatter} />
-        </section>
-
-        {/* Subtle bottom text */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: shatter ? 0 : 1 }}
-          transition={{ delay: shatter ? 0 : 2, duration: shatter ? 0.3 : 2 }}
-          className="mt-8 md:mt-16 text-conceptual text-[10px] md:text-xs text-foreground/80 text-center tracking-wide px-4"
-        >
-          Dados ambientais em tempo real modulam a degradação da imagem
-        </motion.p>
-      </div>
-      <ProjectFooter />
-
-      {/* Fullscreen shatter portal */}
-      {shatter && (
-        <FullscreenShatter
-          videoSrc={shatter.videoSrc}
-          fragments={shatter.fragments}
-          cardRect={shatter.cardRect}
-          onComplete={() => setShatter(null)}
-        />
-      )}
-    </PageTransition>
+        {/* Fullscreen shatter portal */}
+        {shatter && (
+          <FullscreenShatter
+            videoSrc={shatter.videoSrc}
+            fragments={shatter.fragments}
+            cardRect={shatter.cardRect}
+            onComplete={() => setShatter(null)}
+          />
+        )}
+      </PageTransition>
+    </ImmersiveLayout>
   );
 };
 

@@ -17,21 +17,21 @@ export function ProjectFooter({ isVisible = true }: ProjectFooterProps) {
       role="contentinfo"
       aria-label="Informações do projeto"
     >
-      <div className="flex items-end justify-between px-4 md:px-10 py-3 md:py-4">
+      <div className="flex items-end justify-between px-3 sm:px-4 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4">
         <div className="pointer-events-auto">
           <Link
             to="/sobre"
-            className="text-[10px] md:text-xs tracking-wide text-foreground/80 hover:text-foreground transition-colors duration-700"
+            className="text-[9px] sm:text-[10px] md:text-xs tracking-wide text-foreground/80 hover:text-foreground transition-colors duration-700"
           >
             Sobre o projeto →
           </Link>
         </div>
         
         <div className="text-right">
-          <p className="text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-foreground/70">
+          <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-[0.12em] sm:tracking-[0.15em] uppercase text-foreground/70">
             um projeto de
           </p>
-          <p className="text-[10px] md:text-xs tracking-wide text-foreground/80 mt-0.5">
+          <p className="text-[9px] sm:text-[10px] md:text-xs tracking-wide text-foreground/80 mt-0.5">
             Débora Aita Gasparetto
           </p>
         </div>

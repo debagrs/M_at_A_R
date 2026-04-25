@@ -22,18 +22,18 @@ export const Navbar = ({ isInstallationMode, onToggleInstallation }: NavbarProps
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-10 py-4 pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-3 sm:px-4 md:px-8 lg:px-10 py-3 sm:py-4 pointer-events-none"
       role="navigation"
       aria-label="Navegação principal"
     >
       {/* Left side links */}
-      <div className="flex items-center gap-3 md:gap-6 pointer-events-auto">
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-6 pointer-events-auto">
         {links.slice(0, 2).map((link) => (
           <Link
             key={link.to}
             to={link.to}
             aria-current={currentPath === link.to ? 'page' : undefined}
-            className={`text-[10px] md:text-xs tracking-[0.2em] uppercase transition-colors duration-500 ${
+            className={`text-[9px] sm:text-[10px] md:text-xs tracking-[0.15em] sm:tracking-[0.2em] uppercase transition-colors duration-500 ${
               currentPath === link.to
                 ? 'text-white'
                 : 'text-white/70 hover:text-white'
@@ -47,10 +47,10 @@ export const Navbar = ({ isInstallationMode, onToggleInstallation }: NavbarProps
       {/* Center brand - link to home */}
       <Link
         to="/"
-        className="pointer-events-auto group"
+        className="pointer-events-auto group flex-shrink-0"
         aria-label="Página inicial M_at_A_R"
       >
-        <span className="text-lg md:text-2xl font-light tracking-[0.3em] text-white/90 hover:text-white transition-colors duration-700">
+        <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-light tracking-[0.2em] sm:tracking-[0.3em] text-white/90 hover:text-white transition-colors duration-700">
           <span className="text-white">M</span>
           <span className="text-white/60">_</span>
           <span className="text-white">at</span>
@@ -62,7 +62,7 @@ export const Navbar = ({ isInstallationMode, onToggleInstallation }: NavbarProps
       </Link>
 
       {/* Right side: links + mode toggle */}
-      <div className="flex items-center gap-3 md:gap-6 pointer-events-auto">
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-6 pointer-events-auto">
         {links.slice(2).map((link) => (
           <Link
             key={link.to}
